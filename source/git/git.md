@@ -81,3 +81,37 @@ eaadf4e385e865d25c48e7ca9c8395c3f7dfaef0 wrote a readme file
 ```
 
 **版本回退：**
+
+
+
+
+
+### 其他操作：
+
+#### 利用git,使U盘作为仓库
+
+**步骤1、首先U盘上创建一个repository 名称： fill_backup_repos**
+
+```
+git init –bare  fill_backup_repos  //裸库，没有work目录
+```
+
+**步骤2、电脑文件夹创建一个源项目 名称：git_myfill**
+
+```
+git init git_myfill 
+//放入需要同步管理的文件
+git add .    //添加文件、如果有不需要管理的文件，加入 .gitignore文件；
+git commit -m "initialized."   //提交到本地仓库
+git remote add usb F:/fill_backup_repos    //把u盘上的裸库fill_backup添加为远程仓库
+git push usb master
+```
+
+**步骤3、在U盘上的fill_backup 裸仓库里头建立一个本地仓库**
+
+```
+git init  myfill //建一个本地仓库
+git remote add usb F:/fill_backup_repos     //把u盘上的裸库fill_backup_repos添加为远程仓库
+git pull myusb master   //完成代码同步
+```
+
