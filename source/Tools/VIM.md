@@ -50,7 +50,7 @@ vim 的各插件打包文档中通常也包含上述两个（甚至更多）子�
 @curl.exe %*
 这两步做完之后, 在 cmd 窗口里输入 git --version 回车, 然后 curl --version, 如果这两个命令都有输出, 说明 Git 和 Curl 配好了
 3. 然后到 Gvim 安装目录中, 右键, git bash, 然后执行下面的命令:
-    git clone https://github.com/gmarik/Vundle.vim.git vimfiles/bundle/Vundle.vim
+    git clone https://github.com/gmarik/Vundle.vim.git ~/vimfiles/bundle/Vundle.vim
 
 4. 编辑 _vimrc, 这一步和在 Linux 中的差不多, 注意一点:
 把如下代码, 
@@ -107,6 +107,83 @@ call vundle#end()
 ### 3.1 主题风格：
 
 
+
+### 5.2 模板补全
+
+**vim-snippets插件**
+
+```
+Plugin 'honza/vim-snippets'
+let g:UltiSnipsExpandTrigger="<leader><tab>"
+let g:UltiSnipsJumpForwardTrigger="<leader><tab>"
+let g:UltiSnipsJumpBackwardTrigger="<leader><s-tab>"
+```
+
+
+
+
+
+### 5.3 智能补全
+
+#### 基于语义的智能补全
+
+
+
+##### 概述:
+
+基于编译器的两颗语义补全插件
+
+* GCCSense
+
+* clang_complete
+
+  * 特点：
+
+    * 使用难度低
+    * 维护时间长
+    * 支持跨平台
+
+  * 缺点：
+
+    * 无法随键而全
+
+    * 无法模糊搜索
+
+    * 无法高速补全
+
+使用语义补全插件:YCM(YouCompleteMe)
+
+只在两种场景下触发语义补全:
+
+* 补全标识符所在文件必须在buffer中(即文件已打开)
+* 在对象键入"."  "->"  "::"
+
+解决ycm的不足:OmniCppComplete
+
+OmniCppComplete:
+
+* 只要你在代码文件中#include了该标识符所在头文件即可
+
+* 缺点：无法使用YCM的随键而全的特性
+
+* 手动补全，快捷键：(备注:测试了没效果，暂时没搞懂20191116)
+
+  ```
+  " 原先的快捷键
+  <C-x><C-o>
+  " 设定后的快捷键: YCM 集成 OmniCppComplete 补全引擎，设置其快捷键
+  inoremap <leader>; <C-x><C-o>
+  ```
+
+
+
+##### 使用YCM
+
+第一步，通过 vundle 安装 YCM 插件：
+
+```
+Plugin 'Valloric/YouCompleteMe'
+```
 
 
 
@@ -169,6 +246,67 @@ ctags -R
 #2 可以使用：
 按住“CTRL”键，点击对应的函数名或“CTRL+]”，会自动跳转到函数的定义部分，“CTRL+T”则返回；
 ```
+
+
+
+### markdown-preview
+
+网址:
+
+<https://github.com/iamcco/markdown-preview.vim>
+
+安装方法:
+
+```
+Plugin 'iamcco/mathjax-support-for-mkdp'
+Plugin 'iamcco/markdown-preview.vim'
+```
+
+默认配置:
+
+```
+let g:mkdp_path_to_chrome = ""
+" 设置 chrome 浏览器的路径（或是启动 chrome（或其他现代浏览器）的命令）
+" 如果设置了该参数, g:mkdp_browserfunc 将被忽略
+
+let g:mkdp_browserfunc = 'MKDP_browserfunc_default'
+" vim 回调函数, 参数为要打开的 url
+
+let g:mkdp_auto_start = 0
+" 设置为 1 可以在打开 markdown 文件的时候自动打开浏览器预览，只在打开
+" markdown 文件的时候打开一次
+
+let g:mkdp_auto_open = 0
+" 设置为 1 在编辑 markdown 的时候检查预览窗口是否已经打开，否则自动打开预
+" 览窗口
+
+let g:mkdp_auto_close = 1
+" 在切换 buffer 的时候自动关闭预览窗口，设置为 0 则在切换 buffer 的时候不
+" 自动关闭预览窗口
+
+let g:mkdp_refresh_slow = 0
+" 设置为 1 则只有在保存文件，或退出插入模式的时候更新预览，默认为 0，实时
+" 更新预览
+
+let g:mkdp_command_for_global = 0
+" 设置为 1 则所有文件都可以使用 MarkdownPreview 进行预览，默认只有 markdown
+" 文件可以使用改命令
+
+let g:mkdp_open_to_the_world = 0
+" 设置为 1, 在使用的网络中的其他计算机也能访问预览页面
+" 默认只监听本地（127.0.0.1），其他计算机不能访问
+```
+
+键位绑定
+
+```
+nmap <silent> <F8> <Plug>MarkdownPreview        " 普通模式
+imap <silent> <F8> <Plug>MarkdownPreview        " 插入模式
+nmap <silent> <F9> <Plug>StopMarkdownPreview    " 普通模式
+imap <silent> <F9> <Plug>StopMarkdownPreview    " 插入模式
+```
+
+
 
 
 
