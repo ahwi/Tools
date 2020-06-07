@@ -7,7 +7,6 @@ https://github.com/yangyangwithgnu/use_vim_as_ide
 ```
 
 **模块化的vim IDE:**
-
 SpaceVim 
 
 官网:
@@ -17,6 +16,8 @@ https://spacevim.org/cn/
 ```
 
 可以省得配置，后面可以研究
+
+
 
 
 
@@ -121,6 +122,101 @@ let g:UltiSnipsJumpBackwardTrigger="<leader><s-tab>"
 
 
 
+## 4. 代码分析
+
+
+
+### 4.7 声明/定义跳转
+
+#### 基于语义的声明/定义跳转
+
+快捷键
+
+```
+nnoremap <leader>jc :YcmCompleter GoToDeclaration<CR>
+" 只能是 #include 或已打开的文件
+nnoremap <leader>jd :YcmCompleter GoToDefinition<CR>
+```
+
+
+
+
+
+### 4.8 内容查找
+
+**ctrlsf**：<https://github.com/dyng/ctrlsf.vim> 
+
+**安装:**
+
+* windows:
+
+  * 安装ag查找工具
+
+    <https://github.com/k-takata/the_silver_searcher-win32>
+
+    下载exe，添加ag.exe的路径到系统环境
+
+  * 在_vimrc配置里面加入
+
+    ```
+    Plugin 'dyng/ctrlsf.vim'
+    ```
+
+**使用：**
+
+命令模式键入
+
+```
+:CtrlSF
+```
+
+将自动提取光标所在关键字进行查找，你也可以指定 ack 的选项
+
+```
+:CtrlSF -i -C 1 [pattern] /my/path/
+```
+
+设置快捷键
+
+```
+" 使用 ctrlsf.vim 插件在工程内全局查找光标所在关键字，设置快捷键。快捷键速记法：search in project
+nnoremap <Leader>sp :CtrlSF<CR>
+```
+
+查找结果在子窗口呈现，p将在右侧子窗口中给出该匹配项的完整代码，enter跳到对应的位置
+
+
+
+### 4.9 内容替换
+
+**vim-multiple-cursors：**多光标编辑功能
+
+<https://github.com/terryma/vim-multiple-cursors>
+
+用法:
+
+按v 选中某个字符串 --> ctrl-n匹配选中第二个字符串
+
+
+
+
+
+## 5. 代码开发
+
+### 5.1 快速开关注释
+
+**NERD Commenter**
+
+<https://github.com/preservim/nerdcommenter>
+
+\<leader\>cc 注释当前选中文本
+
+\<leader\>cu 取消选中文本的注释
+
+
+
+
+
 
 
 ### 5.3 智能补全
@@ -188,6 +284,18 @@ Plugin 'Valloric/YouCompleteMe'
 
 
 
+
+## 8. 其他辅助工具
+
+### 8.4 markdown 即时预览
+
+**markdown-preview:**
+
+<https://github.com/iamcco/markdown-preview.nvim>
+
+markdwon的编写教程
+
+<https://github.com/adam-p/markdown-here/wiki>
 
 
 
@@ -307,6 +415,154 @@ imap <silent> <F9> <Plug>StopMarkdownPreview    " 插入模式
 ```
 
 
+### 浏览器vim插件
+**surfingkeys**
+**安装** 可以直接在google应用商店里面安装
+**使用文档** https://github.com/brookhong/Surfingkeys
+**快捷键:**
+```
+? help
+t 搜索标签/历史
+/ 查找
+f+node 点击某个链接
+v 切换到visual模式
+T 切换标签栏
+ab 添加到书签
+b 打开书签
+r 刷新
+e 上滑一页
+d 下滑一页
+on 打开新的标签
+```
+
+
+
+
+### 快捷键
+
+```
+
+j 合并当前行和下一行
+vip 选中所有行
+r 替换
+f + xxx  跳转到当前行的某个字符
+v 选择字符 <C-n>选中下一个一样的字符
+==============跳转
+0 跳到行首
+$ 跳到行尾
+V 选中整行
+<leader>js 跳转到声明的地方
+<leader>jd 跳转到定义的地方
+
+" 对所有行执行操作
+如在选中的行后面插入 (<++>)
+选中行 : normal A (<++>)
+
+# 读取目录的文件名到vim中
+:r !ls path
+
+# 录制键盘宏
+1. q a 开始录制 录制到a的寄存器
+2. q 退出录制
+3. @a 重放录制的内容
+如果想重复重发5次: 5@a
+
+# 递增 递减
+Ctrl-a 递增一个数字
+Ctrl-x 递减一个数字
+
+# <操作> <动作>
+如 
+cw 修改一个词
+d10h 往右删除10个字
+df: 删除到找到的冒号
+
+# 让当前行成为中心点
+zz
+
+# 注释/取消注释
+;cc 注释
+;uc 取消注释
+
+# ==============分屏
+” 普通快捷键
+sp 上下分屏
+vsp 左右分屏
+" 自定义快捷键
+" 往右边分屏
+map sl :set splitright<CR>:vsplit<CR>
+map sh :set nosplitright<CR>:vsplit<CR>
+map sk :set nosplitbelow<CR>:split<CR>
+map sj :set splitbelow<CR>:split<CR>
+" 分屏跳转
+map <LEADER>h <C-w>h
+map <LEADER>j <C-w>j
+map <LEADER>k <C-w>k
+map <LEADER>l <C-w>l
+
+
+" 分屏大小
+map <up> :res +5<CR>
+map <down> :res -5<CR>
+map <left> :vertical resize -5<CR>
+map <right> :vertical resize +5<CR>
+
+" 分屏切换
+map sv <C-w>t<C-w>H
+map sh <C-w>t<C-w>K
+
+# ================标签
+" 新建一个标签
+map tu :tabe<CR>
+map th :-tabnext<CR>
+map tl :+tabnext<CR>
+
+
+;打印成html
+:TOhtml
+
+
+```
+
+**自定义快捷键:**
+```
+" 保存
+map S :w<CR>
+" 退出
+map Q :q<CR>
+" 加载vimrc MYVIMRC需要设置成环境变量
+map R :source $MYVIMRC<CR>
+
+" 打开NERDTree 文件夹树
+tt 
+```
+
+**设置:**
+```
+" 设置相对行号
+set relativenumber
+" 取消设置相对行号
+" set norelativenumber
+" 设置命令补全
+set wildmenu
+" 高亮
+set hlsearch
+" 一开始就运行不要高亮指令
+exec "nohlsearch"
+" 搜索的时候就高亮
+set incsearch
+" 忽略大小写
+set ignorecase
+" 设置智能匹配大小写
+set smartcase
+" 取消高亮
+noremap <LEADER><CR> :nohlsearch<CR>
+
+;===============配色
+;避免配色有什么不对的  感觉没啥用
+let &t_ut=''
+
+```
 
 
 
@@ -317,12 +573,28 @@ imap <silent> <F9> <Plug>StopMarkdownPreview    " 插入模式
 ```python
 set nocompatible              " be iMproved, required
 filetype off                  " required
+" 设置相对行号
+" set relativenumber
+" 取消设置相对行号
+set norelativenumber
+" 设置命令补全
+set wildmenu
+" 高亮
+set hlsearch
+" 一开始就运行不要高亮指令
+exec "nohlsearch"
+" 搜索的时候就高亮
+set incsearch
+" 忽略大小写
+set ignorecase
+" 设置智能匹配大小写
+set smartcase
 
 " set the runtime path to include Vundle and initialize
 "set rtp+=~/.vim/bundle/Vundle.vim/
 "call vundle#begin()
-set rtp+=$VIM/vimfiles/bundle/Vundle.vim/
-call vundle#begin('$VIM/vimfiles/bundle/')
+set rtp+=$HOME/vimfiles/bundle/Vundle.vim/
+call vundle#begin('$HOME/vimfiles/bundle/')
 
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
@@ -359,7 +631,35 @@ Plugin 'derekwyatt/vim-fswitch'
 Plugin 'majutsushi/tagbar'
 
 " python-mode 支持python的自动补全等操作
-Plugin 'klen/python-mode.git'
+" Plugin 'klen/python-mode.git'
+
+" YCM插件
+Plugin 'Valloric/YouCompleteMe'
+
+" nerdtree插件
+Plugin 'https://github.com/scrooloose/nerdtree.git'
+
+" ctrlsf 插件：全局搜索插件
+Plugin 'dyng/ctrlsf.vim'
+
+" 主题插件
+Plugin 'chriskempson/base16-vim'
+Plugin 'connorholyday/vim-snazzy'
+
+" markdown-preview
+Plugin 'iamcco/mathjax-support-for-mkdp'
+Plugin 'iamcco/markdown-preview.vim'
+
+" markdown插件
+"Plugin 'suan/vim-instant-markdown'
+" 多光标编辑
+Plugin 'terryma/vim-multiple-cursors'
+
+" markdown-preview
+Plugin 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+
+" 注释插件
+Plugin 'preservim/nerdcommenter'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -411,6 +711,42 @@ nnoremap <Leader>jw <C-W>j
 " 定义快捷键在结对符之间跳转
 nmap <Leader>M %
 
+" 取消高亮
+noremap <LEADER><CR> :nohlsearch<CR>
+
+" 保存
+map S :w<CR>
+" 退出
+map Q :q<CR>
+" 加载vimrc
+map R :source $MYVIMRC<CR>
+
+" 往右边分屏
+map sl :set splitright<CR>:vsplit<CR>
+map sh :set nosplitright<CR>:vsplit<CR>
+map sk :set nosplitbelow<CR>:split<CR>
+map sj :set splitbelow<CR>:split<CR>
+" 分屏跳转
+map <LEADER>h <C-w>h
+map <LEADER>j <C-w>j
+map <LEADER>k <C-w>k
+map <LEADER>l <C-w>l
+
+" 分屏大小
+map <C-up> :res +5<CR>
+map <C-down> :res -5<CR>
+map <C-left> :vertical resize -5<CR>
+map <C-right> :vertical resize +5<CR>
+
+" 分屏切换
+map sv <C-w>t<C-w>H
+map sh <C-w>t<C-w>K
+
+" 新建一个标签
+map tu :tabe<CR>
+map th :-tabnext<CR>
+map tl :+tabnext<CR>
+
 " 让配置变更立即生效
 autocmd BufWritePost $MYVIMRC source $MYVIMRC
 
@@ -424,10 +760,24 @@ set nocompatible
 set wildmenu
 
 " 配色方案
-set background=dark
-colorscheme solarized
+
+"set background=dark
+"colorscheme solarized
 "colorscheme molokai
+"colorscheme molokai-dark
 "colorscheme phd
+"colorscheme base16-default
+"let g:molokai_original = 1
+"let g:rehash256 = 1
+"set background=dark
+"set t_Co=256
+"colo molokai
+"colo lucius
+"colo gruvbox
+colo jellybeans
+" colo snazzy
+" let g:SnazzyTransparent = 1
+
 
 " 设置字体大小
 set guifont=courier_new:h14
@@ -479,8 +829,8 @@ set shiftwidth=4
 set softtabstop=4
 
 " 基于缩进或语法进行代码折叠
-"set foldmethod=indent
-set foldmethod=syntax
+set foldmethod=indent
+"set foldmethod=syntax
 " 启动 vim 时关闭折叠代码
 set nofoldenable
 
@@ -537,6 +887,180 @@ set encoding=utf-8  " The encoding displayed.
 set fileencoding=utf-8  " The encoding written to file.
 
 
+
+"let g:ycm_server_python_interpreter="C:\Users\ahwi\AppData\Local\Programs\Python\Python36\python3.exe"
+"let g:ycm_python_binary_path="C:\Users\ahwi\AppData\Local\Programs\Python\Python36\python3.exe"
+
 let g:pymode_python = 'python3'
+set pythonthreedll=python36.dll
+
+" 使用 NERDTree 插件查看工程文件。设置快捷键，速记：file list
+map tt :NERDTreeToggle<CR>
+" 设置NERDTree子窗口宽度
+let NERDTreeWinSize=32
+" 设置NERDTree子窗口位置
+let NERDTreeWinPos="right"
+" 显示隐藏文件
+let NERDTreeShowHidden=1
+" NERDTree 子窗口中不显示冗余帮助信息
+let NERDTreeMinimalUI=1
+" 删除文件时自动删除文件对应 buffer
+let NERDTreeAutoDeleteBuffer=1
+
+
+" YCM 补全菜单配色
+" 菜单
+highlight Pmenu ctermfg=2 ctermbg=3 guifg=#005f87 guibg=#EEE8D5
+" 选中项
+highlight PmenuSel ctermfg=2 ctermbg=3 guifg=#AFD700 guibg=#106900
+" 补全功能在注释中同样有效
+let g:ycm_complete_in_comments=1
+" 允许 vim 加载 .ycm_extra_conf.py 文件，不再提示
+let g:ycm_confirm_extra_conf=0
+" 开启 YCM 标签补全引擎
+let g:ycm_collect_identifiers_from_tags_files=1
+" 引入 C++ 标准库tags
+"set tags+=/data/misc/software/misc./vim/stdcpp.tags
+" YCM 集成 OmniCppComplete 补全引擎，设置其快捷键
+inoremap <leader>; <C-x><C-o>
+" 补全内容不以分割子窗口形式出现，只显示补全列表
+set completeopt-=preview
+" 从第一个键入字符就开始罗列匹配项
+let g:ycm_min_num_of_chars_for_completion=1
+" 禁止缓存匹配项，每次都重新生成匹配项
+let g:ycm_cache_omnifunc=0
+" 语法关键字补全			
+let g:ycm_seed_identifiers_with_syntax=1
+
+"let g:ycm_global_ycm_extra_conf="C:\Users\ahwi\vimfiles\bundle\YouCompleteMe\.ycm_extra_conf.py"
+
+" 使用 ctrlsf.vim 插件在工程内全局查找光标所在关键字，设置快捷键。快捷键速记法：search in project
+nnoremap <Leader>sp :CtrlSF<CR>
+
+
+" 基于语义的声明/定义跳转
+nnoremap <leader>jc :YcmCompleter GoToDeclaration<CR>
+" 只能是 #include 或已打开的文件
+nnoremap <leader>jd :YcmCompleter GoToDefinition<CR>
+
+" 模板补全
+" Track the engine.
+Plugin 'SirVer/ultisnips'
+" Snippets are separated from the engine. Add this if you want them:
+Plugin 'honza/vim-snippets'
+let g:UltiSnipsExpandTrigger="<leader><tab>"
+let g:UltiSnipsJumpForwardTrigger="<leader><tab>"
+let g:UltiSnipsJumpBackwardTrigger="<leader><s-tab>"
+
+
+" markdown-preview ======================
+" set to 1, nvim will open the preview window after entering the markdown buffer
+" default: 0
+let g:mkdp_auto_start = 0
+
+" set to 1, the nvim will auto close current preview window when change
+" from markdown buffer to another buffer
+" default: 1
+let g:mkdp_auto_close = 1
+
+" set to 1, the vim will refresh markdown when save the buffer or
+" leave from insert mode, default 0 is auto refresh markdown as you edit or
+" move the cursor
+" default: 0
+let g:mkdp_refresh_slow = 0
+
+" set to 1, the MarkdownPreview command can be use for all files,
+" by default it can be use in markdown file
+" default: 0
+let g:mkdp_command_for_global = 0
+
+" set to 1, preview server available to others in your network
+" by default, the server listens on localhost (127.0.0.1)
+" default: 0
+let g:mkdp_open_to_the_world = 0
+
+" use custom IP to open preview page
+" useful when you work in remote vim and preview on local browser
+" more detail see: https://github.com/iamcco/markdown-preview.nvim/pull/9
+" default empty
+let g:mkdp_open_ip = ''
+
+" specify browser to open preview page
+" default: ''
+let g:mkdp_browser = ''
+
+" set to 1, echo preview page url in command line when open preview page
+" default is 0
+let g:mkdp_echo_preview_url = 0
+
+" a custom vim function name to open preview page
+" this function will receive url as param
+" default is empty
+let g:mkdp_browserfunc = ''
+
+" options for markdown render
+" mkit: markdown-it options for render
+" katex: katex options for math
+" uml: markdown-it-plantuml options
+" maid: mermaid options
+" disable_sync_scroll: if disable sync scroll, default 0
+" sync_scroll_type: 'middle', 'top' or 'relative', default value is 'middle'
+"   middle: mean the cursor position alway show at the middle of the preview page
+"   top: mean the vim top viewport alway show at the top of the preview page
+"   relative: mean the cursor position alway show at the relative positon of the preview page
+" hide_yaml_meta: if hide yaml metadata, default is 1
+" sequence_diagrams: js-sequence-diagrams options
+" content_editable: if enable content editable for preview page, default: v:false
+let g:mkdp_preview_options = {
+    \ 'mkit': {},
+    \ 'katex': {},
+    \ 'uml': {},
+    \ 'maid': {},
+    \ 'disable_sync_scroll': 0,
+    \ 'sync_scroll_type': 'middle',
+    \ 'hide_yaml_meta': 1,
+    \ 'sequence_diagrams': {},
+    \ 'flowchart_diagrams': {},
+    \ 'content_editable': v:false
+    \ }
+
+" use a custom markdown style must be absolute path
+" like '/Users/username/markdown.css' or expand('~/markdown.css')
+let g:mkdp_markdown_css = ''
+
+" use a custom highlight style must absolute path
+" like '/Users/username/highlight.css' or expand('~/highlight.css')
+let g:mkdp_highlight_css = ''
+
+" use a custom port to start server or random for empty
+let g:mkdp_port = ''
+
+" preview page title
+" ${name} will be replace with the file name
+let g:mkdp_page_title = '「${name}」'
+
+
+" example
+nmap <C-s> <Plug>MarkdownPreview
+nmap <M-s> <Plug>MarkdownPreviewStop
+nmap <C-p> <Plug>MarkdownPreviewToggle
+
+autocmd Filetype markdown inoremap ,f <Esc>/<++><CR>:nohlsearch<CR>c4l
+autocmd Filetype markdown inoremap ,n ---<Enter><Enter>
+autocmd Filetype markdown inoremap ,b **** <++><Esc>F*hi
+autocmd Filetype markdown inoremap ,s ~~~~ <++><Esc>F~hi
+autocmd Filetype markdown inoremap ,i ** <++><Esc>F*i
+autocmd Filetype markdown inoremap ,d `` <++><Esc>F`i
+autocmd Filetype markdown inoremap ,c ```<Enter><++><Enter>```<Enter><Enter><++><Esc>4kA
+autocmd Filetype markdown inoremap ,h ====<Space><++><Esc>F=hi
+autocmd Filetype markdown inoremap ,p ![](<++>) <++><Esc>F[a
+autocmd Filetype markdown inoremap ,a [](<++>) <++><Esc>F[a
+autocmd Filetype markdown inoremap ,1 #<Space><Enter><++><Esc>kA
+autocmd Filetype markdown inoremap ,2 ##<Space><Enter><++><Esc>kA
+autocmd Filetype markdown inoremap ,3 ###<Space><Enter><++><Esc>kA
+autocmd Filetype markdown inoremap ,4 ####<Space><Enter><++><Esc>kA
+autocmd Filetype markdown inoremap ,l --------<Enter>
+
+" markdown-preview ======================
 ```
 
