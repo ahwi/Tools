@@ -21,7 +21,7 @@ git config --global user.email "email@example.com"
 
 **初始化版本库：**
 
-```python
+```cmd
 git init
 ```
 
@@ -29,7 +29,7 @@ git init
 
 * 添加文件:
 
-  ```python
+  ```cmd
   使用命令git add <file>，注意，可反复多次使用，添加多个文件；
   使用命令git commit -m <message>，完成提交
   ```
@@ -82,6 +82,85 @@ eaadf4e385e865d25c48e7ca9c8395c3f7dfaef0 wrote a readme file
 
 **版本回退：**
 
+* HEAD 指向当前版本
+* git reset --hard commit_id 切换到指定版本
+* 查看commit_id的方法:
+    * git log 提交历史
+    * git reflog 命令历史
+
+
+### 工作区、版本库和暂存区
+* 工作区(Working Directory):代码的目录
+* 版本库(Repository):`.git`目录
+* 暂存区(stage或叫index)
+    * git add 提交到此目录
+* master:Git会自动创建第一个主分支master
+    * git commit 提交到此目录
+
+![示意图](./image/workDirectory.jpg)
+    
+
+### 撤销修改
+* 丢弃工作区的修改: git checkout -- <file>
+* 丢弃添加到暂存区的文件 git reset HEAD <file>
+* 撤销本次提交 -- 版本回退
+
+### 删除文件
+使用`git rm`删除文件
+
+## 远程仓库
+**使用github当作你的远程仓库:**
+1. 创建github用户
+2. 在本地电脑生成ssh密钥
+```
+$ ssh-keygen -t rsa -C "youremail@example.com"
+```
+3. 将密钥提交到你的github的账号设置中
+
+#### 添加远程仓库
+1. github上面创建一个仓库: 
+    `git@github.com:xxx/learngit.git`
+2. 在本地的仓库下执行命令:
+    ```
+    git remote add origin git@github.com:michaelliao/learngit.git
+    ```
+3. 推送本地文件到github
+    ```
+    git push -u origin master
+    ```
+    第一次推送master分支,-u参数:Git不但会把本地的master分支内容推送的远程新的master分支，还会把本地的master分支和远程的master分支关联起来，在以后的推送或者拉取时就可以简化命令。
+4. 后面的提交:
+    ```
+    git push origin master
+    ```
+
+5. 从远程仓库中克隆:
+```
+$ git clone git@github.com:xxx/gitskills.gi
+```
+
+### 分支管理
+#### 创建与合并分支
+ 
+* 查看分支：git branch
+* 创建分支：git branch <name>
+* 切换分支：git checkout <name>或者git switch <name>
+* 创建+切换分支：git checkout -b <name>或者git switch -c <name>
+* 合并某分支到当前分支：git merge <name>
+* 删除分支：git branch -d <name>
+
+#### 解决冲突
+解决冲突就是把Git合并失败的文件手动编辑为我们希望的内容，再提交
+`git log --graph`命令可以看到分支合并图
+
+
+
+
+
+
+
+
+
 
 
 
@@ -114,4 +193,10 @@ git init  myfill //建一个本地仓库
 git remote add usb F:/fill_backup_repos     //把u盘上的裸库fill_backup_repos添加为远程仓库
 git pull myusb master   //完成代码同步
 ```
+
+
+#### 其他命令
+**git checkout**
+1. 切换或者新建分支。
+2. 将暂存区或者指定commit内容覆盖到工作区
 
