@@ -98,7 +98,7 @@ eaadf4e385e865d25c48e7ca9c8395c3f7dfaef0 wrote a readme file
     * git commit 提交到此目录
 
 ![示意图](./image/workDirectory.jpg)
-    
+​    
 
 ### 撤销修改
 * 丢弃工作区的修改: git checkout -- <file>
@@ -141,7 +141,7 @@ $ git clone git@github.com:xxx/gitskills.gi
 
 ### 分支管理
 #### 创建与合并分支
- 
+
 * 查看分支：git branch
 * 创建分支：git branch <name>
 * 切换分支：git checkout <name>或者git switch <name>
@@ -199,4 +199,57 @@ git pull myusb master   //完成代码同步
 **git checkout**
 1. 切换或者新建分支。
 2. 将暂存区或者指定commit内容覆盖到工作区
+
+### 分支
+
+1. 创建dev分支，如何切换到dev分支
+
+```
+  $ git checkout -b dev
+  Switched to a new branch 'dev'
+```
+
+1. -b 参数 相当于两条命令(创建和切换)
+
+   ```
+   $ git branch dev
+   $ git checkout dev
+   Switched to branch 'dev'
+   ```
+
+2. 查看当前分支 "git branch"
+
+   ```
+   $ git branch
+   * dev
+     master
+   ```
+
+3. 新的切换分支命令:
+
+   ```
+   git switch master
+   ```
+
+
+
+### 更新代码到本地
+
+1. 从远程获取最新版本到本地:
+
+   ```
+   git fetch origin master
+   ```
+
+2. 比较本地的仓库和远程参考的区别
+
+   ```
+   git log -p master.. origin/master
+   ```
+
+3. 把远程下载下来的代码合并到本地仓库，远程的和本地的合并
+
+   ```
+   git merge origin/master
+   ```
 
