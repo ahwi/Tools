@@ -124,6 +124,20 @@ let g:UltiSnipsJumpBackwardTrigger="<leader><s-tab>"
 
 ## 4. 代码分析
 
+### 4.3 代码折叠
+vim自带代码折叠
+添加如下配置:
+```
+" 基于缩进或语法进行代码折叠
+"set foldmethod=indent
+set foldmethod=syntax
+" 启动 vim 时关闭折叠代码
+set nofoldenable
+```
+操作：
+* za，打开或关闭当前折叠
+* zM，关闭所有折叠
+* zR，打开所有折叠。
 ### 4.6 标识符列表
 
 #### 基于标签的标识符列表
