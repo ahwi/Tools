@@ -124,7 +124,13 @@ let g:UltiSnipsJumpBackwardTrigger="<leader><s-tab>"
 
 ## 4. 代码分析
 
+### 4.6 标识符列表
 
+#### 基于标签的标识符列表
+
+tagbar（<https://github.com/majutsushi/tagbar> ）是一款基于标签的标识符列表
+
+需要用到ctags
 
 ### 4.7 声明/定义跳转
 
@@ -661,6 +667,11 @@ Plugin 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for'
 " 注释插件
 Plugin 'preservim/nerdcommenter'
 
+" 光标下划线插件
+Plugin 'itchyny/vim-cursorword'
+" 关键词高亮插件
+Plugin 'lfv89/vim-interestingwords'
+
 call vundle#end()            " required
 filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
@@ -727,10 +738,10 @@ map sh :set nosplitright<CR>:vsplit<CR>
 map sk :set nosplitbelow<CR>:split<CR>
 map sj :set splitbelow<CR>:split<CR>
 " 分屏跳转
-map <LEADER>h <C-w>h
-map <LEADER>j <C-w>j
-map <LEADER>k <C-w>k
-map <LEADER>l <C-w>l
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
 
 " 分屏大小
 map <C-up> :res +5<CR>
@@ -747,6 +758,11 @@ map tu :tabe<CR>
 map th :-tabnext<CR>
 map tl :+tabnext<CR>
 
+
+nmap <C-\>   <Plug>NERDCommenterToggle
+vmap <C-\>   <Plug>NERDCommenterToggle<CR>gv
+
+
 " 让配置变更立即生效
 autocmd BufWritePost $MYVIMRC source $MYVIMRC
 
@@ -762,7 +778,7 @@ set wildmenu
 " 配色方案
 
 "set background=dark
-"colorscheme solarized
+colorscheme solarized
 "colorscheme molokai
 "colorscheme molokai-dark
 "colorscheme phd
@@ -774,7 +790,7 @@ set wildmenu
 "colo molokai
 "colo lucius
 "colo gruvbox
-colo jellybeans
+"colo jellybeans
 " colo snazzy
 " let g:SnazzyTransparent = 1
 
@@ -843,7 +859,7 @@ nmap <silent> <Leader>sw :FSHere<cr>
 " 设置 tagbar 子窗口的位置出现在主编辑区的左边 
 let tagbar_left=1 
 " 设置显示／隐藏标签列表子窗口的快捷键。速记：identifier list by tag
-nnoremap <Leader>ilt :TagbarToggle<CR> 
+nnoremap <Leader>l :TagbarToggle<CR> 
 " 设置标签子窗口的宽度 
 let tagbar_width=32 
 " tagbar 子窗口中不显示冗余帮助信息 
@@ -882,10 +898,10 @@ let g:tagbar_type_cpp = {
          \ 'union'     : 'u'
      \ }
 \ }
+let g:tagbar_ctags_bin='C:\Users\ahwi\vimfiles\bundle\ctags\ctags.exe'
 
 set encoding=utf-8  " The encoding displayed.
 set fileencoding=utf-8  " The encoding written to file.
-
 
 
 "let g:ycm_server_python_interpreter="C:\Users\ahwi\AppData\Local\Programs\Python\Python36\python3.exe"
@@ -922,7 +938,7 @@ let g:ycm_collect_identifiers_from_tags_files=1
 " 引入 C++ 标准库tags
 "set tags+=/data/misc/software/misc./vim/stdcpp.tags
 " YCM 集成 OmniCppComplete 补全引擎，设置其快捷键
-inoremap <leader>; <C-x><C-o>
+" inoremap <leader>; <C-x><C-o>
 " 补全内容不以分割子窗口形式出现，只显示补全列表
 set completeopt-=preview
 " 从第一个键入字符就开始罗列匹配项
@@ -1062,5 +1078,6 @@ autocmd Filetype markdown inoremap ,4 ####<Space><Enter><++><Esc>kA
 autocmd Filetype markdown inoremap ,l --------<Enter>
 
 " markdown-preview ======================
+
 ```
 
