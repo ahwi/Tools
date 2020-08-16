@@ -434,12 +434,46 @@ nmap <silent> <F9> <Plug>StopMarkdownPreview    " 普通模式
 imap <silent> <F9> <Plug>StopMarkdownPreview    " 插入模式
 ```
 
+### 语法检查工具--ale
+
+配置:
+
+```
+" 语法检查
+Plugin 'w0rp/ale'
+
+"let g:ale_sign_column_always = 1
+"let g:ale_set_highlights = 1
+let g:ale_sign_error = '>>'
+let g:ale_sign_warning = '--'
+"let g:ale_linters = {'python3':['pylint']}
+" let g:ale_linters =['pylint']
+let b:ale_linters = ['pylint']
+" Disable warnings about trailing whitespace for Python files.
+let b:ale_warn_about_trailing_whitespace = 0
+" Only run linters named in ale_linters settings.
+let g:ale_linters_explicit = 1
+```
+
+需要安装python的pylint插件
+
+```
+python3 -m pip install pylint
+```
+
+忽略 missing-module-docstring警告
+
+* 将pylintrc拷贝到用户根目录底下
+
+
 
 ### 浏览器vim插件
+
 **surfingkeys**
 **安装** 可以直接在google应用商店里面安装
 **使用文档** https://github.com/brookhong/Surfingkeys
 **快捷键:**
+
 ```
 ? help
 t 搜索标签/历史
