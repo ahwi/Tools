@@ -362,6 +362,7 @@ git pull usb master   //完成代码同步
    git merge origin/master
    ```
 
+## 常见问题
 ### windows中文乱码的问题
 
 执行如下命令
@@ -378,4 +379,10 @@ $ export LESSCHARSET=utf-8 (windows下为：set LESSCHARSET=utf-8)
 ```
 
 参考：https://zhuanlan.zhihu.com/p/357002483
+
+### git提交时”warning: LF will be replaced by CRLF“提示
+
+使用 命令`git config --global core.autocrlf false`
+
+参考：`https://www.cnblogs.com/sminocence/p/9357209.html`
 
