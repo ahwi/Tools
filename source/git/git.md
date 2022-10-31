@@ -362,3 +362,20 @@ git pull usb master   //完成代码同步
    git merge origin/master
    ```
 
+### windows中文乱码的问题
+
+执行如下命令
+
+```txt
+$ git config --global core.quotepath false  		# 显示 status 编码
+$ git config --global gui.encoding utf-8			# 图形界面编码
+$ git config --global i18n.commit.encoding utf-8	# 提交信息编码
+$ git config --global i18n.logoutputencoding utf-8	# 输出 log 编码
+
+# =========下面这条没执行===
+$ export LESSCHARSET=utf-8 (windows下为：set LESSCHARSET=utf-8)
+# 最后一条命令是因为 git log 默认使用 less 分页，所以需要 bash 对 less 命令进行 utf-8 编码
+```
+
+参考：https://zhuanlan.zhihu.com/p/357002483
+
