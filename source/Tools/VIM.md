@@ -1129,3 +1129,135 @@ autocmd Filetype markdown inoremap ,l --------<Enter>
 
 ```
 
+
+
+## nvim
+
+### vim-plug （插件安装管理）
+
+github路径：`https://github.com/junegunn/vim-plug`
+
+**windows安装**
+
+使用PowerShell
+
+```cmd
+iwr -useb https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim | ni $HOME/vimfiles/autoload/plug.vim -Force
+```
+
+用法：
+
+```txt
+call plug#begin()
+" The default plugin directory will be as follows:
+"   - Vim (Linux/macOS): '~/.vim/plugged'
+"   - Vim (Windows): '~/vimfiles/plugged'
+"   - Neovim (Linux/macOS/Windows): stdpath('data') . '/plugged'
+" You can specify a custom plugin directory by passing it as the argument
+"   - e.g. `call plug#begin('~/.vim/plugged')`
+"   - Avoid using standard Vim directory names like 'plugin'
+ Make sure you use single quotes
+
+" Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
+Plug 'junegunn/vim-easy-align'
+call plug#end()
+```
+
+
+
+### ycm安装（代码补全插件）
+
+github路径：`https://github.com/ycm-core/YouCompleteMe`
+
+**安装步骤**
+
+- Install YCM plugin：
+
+  ```txt
+  " 自动补全
+  Plug 'valloric/youcompleteme'
+  ```
+
+- Install [Visual Studio Build Tools 2019](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=BuildTools&rel=16)
+
+- Install CMake, Vim and Python
+
+  - CMake:`https://cmake.org/download/`
+  - vim：官网下载安装包安装（这里安装neovim）
+  - python：官网下载安装包安装
+
+- Install go, node and npm
+
+  按需求安装，这里不需要
+
+- Compile YCM
+
+  ```cmd
+  # 进到YouCompleteMe插件路径里面
+  cd YouCompleteMe
+  # 安装所有语言的补全
+  # python3 install.py --all
+  
+  # 安装c和c++支持的补全（python不需要指定）
+  python install.py --clangd-completer --verbose
+  ```
+
+- Add `set encoding=utf-8` to your `vimrc` or `init.vim`
+
+添加配置：
+
+```txt
+" YCM 补全菜单配色
+" 菜单
+"highlight Pmenu ctermfg=2 ctermbg=3 guifg=#005f87 guibg=#EEE8D5
+" 选中项
+"highlight PmenuSel ctermfg=2 ctermbg=3 guifg=#AFD700 guibg=#106900
+" 补全功能在注释中同样有效
+let g:ycm_complete_in_comments=1
+" 允许 vim 加载 .ycm_extra_conf.py 文件，不再提示
+let g:ycm_confirm_extra_conf=0
+" 开启 YCM 标签补全引擎
+let g:ycm_collect_identifiers_from_tags_files=1
+" 引入 C++ 标准库tags
+"set tags+=/data/misc/software/misc./vim/stdcpp.tags
+" YCM 集成 OmniCppComplete 补全引擎，设置其快捷键
+inoremap <leader>; <C-x><C-o>
+" 补全内容不以分割子窗口形式出现，只显示补全列表
+set completeopt-=preview
+" 从第一个键入字符就开始罗列匹配项
+let g:ycm_min_num_of_chars_for_completion=1
+" 禁止缓存匹配项，每次都重新生成匹配项
+let g:ycm_cache_omnifunc=0
+" 语法关键字补全			
+let g:ycm_seed_identifiers_with_syntax=1
+
+nnoremap <leader>jc :YcmCompleter GoToDeclaration<CR>
+" 只能是 #include 或已打开的文件
+nnoremap <leader>jd :YcmCompleter GoToDefinition<CR>
+```
+
+
+
+### 全屏切换
+
+利用wmctrl工具进行全屏的切换
+
+* 下载工具：`https://github.com/ebranlard/wmctrl-for-windows`
+
+* 把wmctrl放到系统路径
+
+* 添加如下配置
+
+```txt
+" 全屏切换------
+" 将外部命令 wmctrl 控制窗口最大化的命令行参数封装成一个 vim 的函数
+fun! ToggleFullscreen()
+	call system("wmctrl -ir " . v:windowid . " -b toggle,fullscreen")
+endf
+" 全屏开/关快捷键 F11
+map <silent> <F11> :call ToggleFullscreen()<CR>
+" 启动 vim 时自动全屏
+autocmd VimEnter * call ToggleFullscreen()
+" ------------
+```
+
